@@ -9,6 +9,9 @@
         
     </head>
     <body class="antialiased">
-       <h1>Azul</h1>
+       <div id="app">
+
+       </div>
     </body>
+    @vite('ressources/js/app.js')
 </html>
