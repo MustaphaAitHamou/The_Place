@@ -28,6 +28,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/save', function(Request $request) {
         Redis::set($request->key, $request->color . ':' . $request->user()->email);
 
+
+        ColorChanged::dispatch([
+            'key' => $request->key,
+            'color' => $request->color . ':' . $request->user()->email
+        ]);
+
+
         return response()->json(Redis::get($request->key));
     });
 });
