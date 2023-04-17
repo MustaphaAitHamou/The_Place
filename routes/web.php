@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use \Illuminate\Http\Request;
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', function() {
@@ -24,6 +23,12 @@ Route::group(['middleware' => 'auth'], function() {
         }
 
         return $pixels;
+    });
+
+    Route::post('/save', function(Request $request) {
+        Redis::set($request->key, $request->color . ':' . $request->user()->email);
+
+        return response()->json(Redis::get($request->key));
     });
 });
 
